@@ -1,0 +1,1898 @@
+:root {
+    color-scheme: dark;
+    --sq-sidebar-width: 240px;
+    --sq-font: "Segoe UI", Arial, sans-serif;
+    --sq-bg: #201d33;
+    --sq-surface: #252238;
+    --sq-text: #ffffff;
+    --sq-muted: #c9c4d6;
+    --sq-border: rgba(255, 255, 255, 0.14);
+    --sq-accent: #8e78d0;
+    --sq-accent-foreground: #ffffff;
+    --sq-dialog-surface: #ffffff;
+    --sq-dialog-text: #29263a;
+    --sq-dialog-muted: #696579;
+    --sq-panel: #ffffff;
+    --sq-panel-alt: #f7f5fb;
+    --sq-control: #ffffff;
+    --sq-heading: #29263a;
+    --sq-link: #55339b;
+    --sq-content-background: linear-gradient(
+        160deg,
+        #1500d4 0%,
+        #3020b4 17%,
+        #6e458e 47%,
+        #c77d39 75%,
+        #ff9e00 100%
+    );
+    --sq-content-text: #ffffff;
+    scrollbar-color: var(--sq-accent) rgba(16, 0, 77, 0.35);
+    scrollbar-width: thin;
+}
+
+:root[data-theme="gradient"] {
+    color-scheme: dark;
+    --sq-bg: #201d33;
+    --sq-surface: #ffffff;
+    --sq-text: #ffffff;
+    --sq-muted: #e1ddec;
+    --sq-border: rgba(255, 255, 255, 0.18);
+    --sq-panel: #ffffff;
+    --sq-panel-alt: #f7f5ff;
+    --sq-control: #ffffff;
+    --sq-heading: #29263a;
+    --sq-link: #55339b;
+    --sq-content-background: linear-gradient(
+        160deg,
+        #1500d4 0%,
+        #3020b4 17%,
+        #6e458e 47%,
+        #c77d39 75%,
+        #ff9e00 100%
+    );
+    --sq-content-text: #ffffff;
+}
+
+:root[data-theme="dark"] {
+    color-scheme: dark;
+    --sq-bg: #11101b;
+    --sq-surface: #242234;
+    --sq-text: #f7f5fc;
+    --sq-muted: #c9c4d6;
+    --sq-border: rgba(255, 255, 255, 0.14);
+    --sq-dialog-surface: #242234;
+    --sq-dialog-text: #f7f5fc;
+    --sq-dialog-muted: #c9c4d6;
+    --sq-content-background: linear-gradient(145deg, #1b1928, #252136);
+    --sq-content-text: #f7f5fc;
+}
+
+:root[data-theme="light"] {
+    color-scheme: light;
+    --sq-bg: #f4f3f8;
+    --sq-surface: #ffffff;
+    --sq-text: #29263a;
+    --sq-muted: #696579;
+    --sq-border: #e2deeb;
+    --sq-panel: #ffffff;
+    --sq-panel-alt: #f7f5fb;
+    --sq-control: #ffffff;
+    --sq-heading: #29263a;
+    --sq-link: #55339b;
+    --sq-content-background: linear-gradient(145deg, #faf9fc, #f0eef6);
+    --sq-content-text: #29263a;
+    scrollbar-color: var(--sq-accent) #eeebf4;
+}
+
+* {
+    font-family: var(--sq-font);
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    background: var(--sq-bg);
+    color: var(--sq-text);
+    line-height: 1.5;
+}
+
+.dashboard-main p,
+.main-content p {
+    font-size: max(12px, 1em);
+}
+
+.dashboard-main .eyebrow,
+.dashboard-main label,
+.dashboard-main .overview-label,
+.dashboard-main .file-size-hint,
+.dashboard-main .page-footer,
+.sidebar-label,
+.profile-level {
+    font-size: max(11px, 1em);
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+* {
+    scrollbar-color: inherit;
+    scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+}
+
+*::-webkit-scrollbar-track {
+    background: rgba(28, 24, 44, 0.18);
+    border-radius: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: var(--sq-accent);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: var(--sq-accent);
+    background-clip: padding-box;
+}
+
+:root[data-theme="light"] *::-webkit-scrollbar-track {
+    background: #eeebf4;
+}
+
+/* Keep the category rail fixed while the page content scrolls normally. */
+.dashboard-page {
+    height: auto !important;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: visible !important;
+}
+
+.dashboard-page .dashboard-layout {
+    display: block;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: visible !important;
+}
+
+.dashboard-page .sidebar,
+.app-layout > .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 30;
+    display: flex;
+    flex: 0 0 var(--sq-sidebar-width);
+    flex-direction: column;
+    width: var(--sq-sidebar-width);
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 26px 18px 20px;
+    background:
+        linear-gradient(rgba(12, 8, 39, 0.64), rgba(12, 8, 39, 0.64)),
+        linear-gradient(
+            160deg,
+            #25145c 0%,
+            #322365 43%,
+            #56385f 72%,
+            #77432f 100%
+        );
+    border-right: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 8px 0 28px rgba(10, 8, 30, 0.2);
+    backdrop-filter: blur(18px) saturate(130%);
+    scrollbar-color: rgba(255, 255, 255, 0.45) rgba(16, 0, 77, 0.18);
+}
+
+.dashboard-page .sidebar .brand,
+.app-layout > .sidebar .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 52px;
+    margin: 0 4px 34px;
+    flex-shrink: 0;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.dashboard-page .sidebar .brand img,
+.app-layout > .sidebar .brand img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+.dashboard-page .sidebar .brand span,
+.app-layout > .sidebar .brand span {
+    font-size: 22px;
+    font-weight: 750;
+    letter-spacing: -0.3px;
+    white-space: nowrap;
+}
+
+.dashboard-page .sidebar .sidebar-label,
+.app-layout > .sidebar .sidebar-label {
+    margin: 0 10px 14px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.75;
+}
+
+.dashboard-page .sidebar-nav,
+.app-layout > .sidebar .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    gap: 9px;
+}
+
+.dashboard-page .sidebar .nav-item,
+.app-layout > .sidebar .nav-item {
+    min-height: 50px;
+    justify-content: flex-start;
+    gap: 14px;
+    padding: 0 16px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: left;
+    text-decoration: none;
+    transition: background 0.18s ease, transform 0.18s ease;
+}
+
+.dashboard-page .sidebar .nav-icon,
+.app-layout > .sidebar .nav-icon {
+    flex: 0 0 24px;
+    width: 24px;
+    font-size: 21px;
+    text-align: center;
+    line-height: 1;
+}
+
+.dashboard-page .sidebar .sidebar-note,
+.app-layout > .sidebar .sidebar-note {
+    margin-top: auto;
+}
+
+.dashboard-page .sidebar .profile-button,
+.app-layout > .sidebar .profile-button {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    flex-shrink: 0;
+    width: 100%;
+    margin-top: 14px;
+    backdrop-filter: blur(14px);
+}
+
+.app-layout > .sidebar .sidebar-bottom {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin-top: 0;
+}
+
+.app-layout > .sidebar .back-home {
+    display: none;
+}
+
+.dashboard-page .dashboard-main {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: calc(100% - var(--sq-sidebar-width));
+    min-width: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    height: auto;
+    margin-left: var(--sq-sidebar-width);
+    overflow: visible !important;
+    padding: 36px clamp(22px, 3.5vw, 54px) 38px;
+    background: var(--sq-content-background);
+    color: var(--sq-content-text);
+}
+
+.dashboard-page .dashboard-main > * {
+    margin-bottom: 0;
+}
+
+.dashboard-page .dashboard-main > * + * {
+    margin-top: 18px;
+}
+
+.app-layout > .main-content {
+    width: calc(100% - var(--sq-sidebar-width));
+    max-width: none;
+    min-height: 100vh;
+    margin-left: var(--sq-sidebar-width);
+    padding: 36px clamp(22px, 3.5vw, 54px) 38px;
+    background: var(--sq-content-background);
+    color: var(--sq-content-text);
+}
+
+.dashboard-main > .topbar.curriculum-heading,
+.main-content > .topbar.curriculum-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-shrink: 0;
+    gap: 24px;
+    width: 100%;
+    margin: 0 0 4px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+
+#homePage .widget {
+    background: var(--sq-surface);
+    color: var(--sq-dialog-text);
+}
+
+#homePage .widget-description,
+#homePage .empty-state {
+    color: var(--sq-dialog-muted);
+}
+
+#homePage .task-item {
+    background: color-mix(in srgb, var(--sq-surface) 86%, var(--sq-accent));
+}
+
+#homePage .task-name,
+#homePage .date-month,
+#homePage .date-weekday,
+#homePage .date-day {
+    color: var(--sq-dialog-text);
+}
+
+#protectedTasks .task-toolbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 18px;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 16px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.26);
+    border-radius: 13px;
+    background: rgba(24, 18, 74, 0.45);
+    color: #fff;
+    box-shadow: 0 8px 22px rgba(15, 10, 45, 0.12);
+}
+
+#protectedTasks .toolbar-heading {
+    min-width: 0;
+}
+
+#protectedTasks .toolbar-heading h2 {
+    margin: 0;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 0;
+}
+
+#protectedTasks .toolbar-heading p {
+    margin: 5px 0 0;
+    color: #eeeaf7;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+#protectedTasks .filter-control {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0;
+    color: #f3f0fa;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+#protectedTasks .filter-control select {
+    width: 150px;
+    max-width: 100%;
+    min-height: 40px;
+    padding: 8px 30px 8px 11px;
+    border: 1px solid rgba(255, 255, 255, 0.38);
+    border-radius: 8px;
+    background: rgba(24, 18, 74, 0.8);
+    color: #fff;
+    font-size: 13px;
+}
+
+#protectedTasks .filter-control option {
+    background: #242038;
+    color: #fff;
+}
+
+:root[data-theme="dark"] #protectedTasks .task-toolbar {
+    border-color: var(--sq-border);
+    background: #242234;
+    color: #f7f5fc;
+}
+
+:root[data-theme="dark"] #protectedTasks .toolbar-heading h2 {
+    color: #f7f5fc;
+}
+
+:root[data-theme="dark"] #protectedTasks .toolbar-heading p,
+:root[data-theme="dark"] #protectedTasks .filter-control {
+    color: #d5d1df;
+}
+
+:root[data-theme="dark"] #protectedTasks .filter-control select {
+    border-color: #514c65;
+    background: #302d42;
+    color: #f7f5fc;
+}
+
+:root[data-theme="dark"] #protectedTasks .filter-control option {
+    background: #302d42;
+    color: #f7f5fc;
+}
+
+:root[data-theme="light"] #protectedTasks .task-toolbar {
+    border-color: #e2deeb;
+    background: #fff;
+    color: #29263a;
+}
+
+:root[data-theme="light"] #protectedTasks .toolbar-heading h2 {
+    color: #29263a;
+}
+
+:root[data-theme="light"] #protectedTasks .toolbar-heading p,
+:root[data-theme="light"] #protectedTasks .filter-control {
+    color: #696579;
+}
+
+:root[data-theme="light"] #protectedTasks .filter-control select {
+    border-color: #d8d2e5;
+    background: #fff;
+    color: #29263a;
+}
+
+:root[data-theme="light"] #protectedTasks .filter-control option {
+    background: #fff;
+    color: #29263a;
+}
+
+.curriculum-heading .eyebrow {
+    margin: 0 0 8px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 11px;
+    font-weight: 750;
+    letter-spacing: 1.5px;
+    line-height: 1.4;
+}
+
+.curriculum-heading h1 {
+    margin: 0;
+    color: #ffffff;
+    font-family: var(--sq-font);
+    font-size: clamp(28px, 3vw, 36px);
+    font-weight: 750;
+    letter-spacing: -0.8px;
+    line-height: 1.2;
+}
+
+.curriculum-heading .page-subtitle {
+    max-width: 680px;
+    margin: 9px 0 0;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.curriculum-header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 3px;
+}
+
+.curriculum-header-actions .topbar-badge {
+    min-height: 38px;
+    padding: 9px 14px;
+    border-color: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.94);
+    color: #49445b;
+    font-size: 12px;
+}
+
+.sidebar .nav-item.active {
+    background: var(--sq-accent);
+    color: var(--sq-accent-foreground);
+}
+
+.curriculum-header-actions .logout-button,
+.curriculum-header-actions .primary-button {
+    border-color: var(--sq-accent);
+    background: var(--sq-accent);
+    color: var(--sq-accent-foreground);
+}
+
+.dashboard-main button:focus-visible,
+.main-content button:focus-visible,
+.dashboard-main a:focus-visible,
+.main-content a:focus-visible {
+    outline-color: var(--sq-accent);
+}
+
+.dashboard-grid {
+    flex: none;
+    overflow: visible;
+}
+
+.left-widgets,
+.right-widgets {
+    overflow: visible !important;
+}
+
+.task-categories {
+    flex: none;
+    min-height: 0;
+    overflow: visible !important;
+}
+
+.task-card-grid {
+    max-height: none;
+    overflow: visible !important;
+}
+
+.dashboard-main .timer-section,
+.dashboard-main .calendar-section {
+    flex: none;
+    min-height: 0;
+    margin: 0;
+}
+
+.dashboard-main .timer-widget,
+.dashboard-main .calendar-widget {
+    flex: none;
+    min-height: 0;
+}
+
+.profile-dialog,
+.app-dialog.profile-dialog,
+.task-dialog.profile-dialog {
+    z-index: 100;
+    background: var(--sq-dialog-surface);
+    color: var(--sq-dialog-text);
+}
+
+.profile-dialog-content h2,
+.profile-dialog-content > p {
+    color: var(--sq-dialog-text);
+}
+
+.sq-appearance-setting {
+    display: grid;
+    gap: 10px;
+    width: 100%;
+    margin: 20px 0 16px;
+    padding: 14px 15px;
+    border: 1px solid var(--sq-border);
+    border-radius: 12px;
+    background: var(--sq-dialog-surface);
+    color: var(--sq-dialog-text);
+    text-align: left;
+}
+
+.sq-appearance-heading {
+    display: grid;
+    gap: 3px;
+    margin-bottom: 3px;
+}
+
+.sq-appearance-heading strong {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.sq-appearance-heading span {
+    color: var(--sq-dialog-muted);
+    font-size: 12px;
+}
+
+.sq-control-label {
+    color: var(--sq-dialog-text);
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.sq-theme-select {
+    width: 100%;
+    min-height: 40px;
+    padding: 8px 11px;
+    border: 1px solid var(--sq-border);
+    border-radius: 8px;
+    background: var(--sq-dialog-surface);
+    color: var(--sq-dialog-text);
+}
+
+.sq-theme-select option {
+    background: var(--sq-dialog-surface);
+    color: var(--sq-dialog-text);
+}
+
+.sq-accent-choices {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.sq-accent-swatch {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    background: var(--swatch-color);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+}
+
+.sq-accent-swatch[aria-pressed="true"] {
+    border-color: var(--sq-text);
+    outline: 2px solid var(--sq-accent);
+    outline-offset: 2px;
+}
+
+.sq-accent-swatch[data-accent-color="#8e78d0"] {
+    --swatch-color: #8e78d0;
+}
+
+.sq-accent-swatch[data-accent-color="#548bd8"] {
+    --swatch-color: #548bd8;
+}
+
+.sq-accent-swatch[data-accent-color="#319a91"] {
+    --swatch-color: #319a91;
+}
+
+.sq-accent-swatch[data-accent-color="#cb668b"] {
+    --swatch-color: #cb668b;
+}
+
+.sq-accent-swatch[data-accent-color="#c78634"] {
+    --swatch-color: #c78634;
+}
+
+.sq-custom-color {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    border: 1px dashed var(--sq-dialog-muted);
+    border-radius: 50%;
+    color: var(--sq-dialog-text);
+    cursor: pointer;
+}
+
+.sq-custom-color span {
+    font-size: 18px;
+    line-height: 1;
+}
+
+.sq-custom-color input {
+    position: absolute;
+    inset: -8px;
+    width: calc(100% + 16px);
+    height: calc(100% + 16px);
+    opacity: 0;
+    cursor: pointer;
+}
+
+.sq-profile-dialog {
+    width: min(420px, calc(100vw - 32px));
+    padding: 0;
+    border: 1px solid var(--sq-border);
+    border-radius: 18px;
+    background: var(--sq-dialog-surface);
+    color: var(--sq-dialog-text);
+    box-shadow: 0 24px 70px rgba(15, 10, 35, 0.3);
+}
+
+#authAppearanceDialog {
+    position: fixed;
+    inset: 50% auto auto 50%;
+    margin: 0;
+    transform: translate(-50%, -50%);
+}
+
+.sq-profile-dialog::backdrop,
+.profile-dialog::backdrop,
+.app-dialog::backdrop,
+.task-dialog::backdrop {
+    background: rgba(10, 8, 20, 0.62);
+    backdrop-filter: blur(3px);
+}
+
+.sq-profile-content {
+    padding: 30px;
+    text-align: center;
+}
+
+.sq-profile-content h2 {
+    margin: 8px 0 0;
+    color: var(--sq-dialog-text);
+    font-size: 22px;
+}
+
+.sq-profile-kicker {
+    color: var(--sq-dialog-muted);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+}
+
+.sq-profile-close {
+    min-height: 38px;
+    padding: 8px 18px;
+    border: 1px solid var(--sq-accent);
+    border-radius: 8px;
+    background: var(--sq-accent);
+    color: var(--sq-accent-foreground);
+    font-weight: 700;
+}
+
+:root[data-theme="light"] body {
+    background: var(--sq-bg);
+    color: var(--sq-text);
+}
+
+:root[data-theme="light"] .dashboard-page .dashboard-main,
+:root[data-theme="light"] .app-layout > .main-content {
+    background: var(--sq-content-background);
+    color: var(--sq-text);
+}
+
+:root[data-theme="light"] .curriculum-heading .eyebrow,
+:root[data-theme="dark"] .curriculum-heading .eyebrow {
+    color: var(--sq-accent);
+}
+
+:root[data-theme="light"] .curriculum-heading h1,
+:root[data-theme="light"] .curriculum-heading .page-subtitle,
+:root[data-theme="dark"] .curriculum-heading h1,
+:root[data-theme="dark"] .curriculum-heading .page-subtitle {
+    color: var(--sq-content-text);
+}
+
+:root[data-theme="light"] .curriculum-header-actions .logout-button {
+    border-color: var(--sq-accent);
+    background: var(--sq-accent);
+    color: var(--sq-accent-foreground);
+}
+
+:root[data-theme="light"] .dashboard-main .widget-group > label,
+:root[data-theme="light"] .dashboard-main .category-heading,
+:root[data-theme="light"] .dashboard-main .section-label,
+:root[data-theme="light"] .dashboard-main .panel-heading,
+:root[data-theme="light"] .dashboard-main .timer-content > label,
+:root[data-theme="light"] .dashboard-main .timer-settings > label {
+    color: #403a53;
+}
+
+:root[data-theme="light"] .overview-panel,
+:root[data-theme="light"] .task-card,
+:root[data-theme="light"] .category-section,
+:root[data-theme="light"] .task-toolbar,
+:root[data-theme="light"] .timer-widget,
+:root[data-theme="light"] .calendar-widget {
+    border-color: #e2deeb;
+    background: #fff;
+    color: #29263a;
+    box-shadow: 0 7px 22px rgba(46, 37, 75, 0.07);
+}
+
+:root[data-theme="light"] .timer-widget,
+:root[data-theme="light"] .calendar-widget {
+    color: #29263a;
+}
+
+:root[data-theme="light"] .toolbar-heading p,
+:root[data-theme="light"] .category-heading p,
+:root[data-theme="light"] .timer-hint {
+    color: #696579;
+}
+
+:root[data-theme="light"] .overview-icon,
+:root[data-theme="light"] .category-symbol {
+    border-color: #e5def5;
+    background: #f0ecf8;
+    color: #624c96;
+}
+
+:root[data-theme="light"] .category-count {
+    border-color: #ded7ec;
+    background: #f7f5fb;
+    color: #49445b;
+}
+
+:root[data-theme="light"] .progress-track {
+    background: #e5e0ef;
+}
+
+:root[data-theme="light"] .progress-fill {
+    background: linear-gradient(90deg, #7963ae, #aa99d4);
+}
+
+:root[data-theme="light"] .timer-display {
+    color: #392b67;
+}
+
+:root[data-theme="light"] .timer-mode,
+:root[data-theme="light"] .timer-settings input,
+:root[data-theme="light"] .calendar-widget input,
+:root[data-theme="light"] .calendar-widget select {
+    border-color: #d8d2e5;
+    background: #fff;
+    color: #29263a;
+}
+
+:root[data-theme="light"] .calendar-widget .calendar-day:not(.selected) {
+    color: #29263a;
+}
+
+:root[data-theme="light"] .calendar-widget .calendar-day.selected {
+    color: var(--sq-accent-foreground);
+}
+
+:root[data-theme="light"] .curriculum-header-actions .primary-button {
+    color: var(--sq-accent-foreground);
+}
+
+:root[data-theme="light"] .calendar-widget .calendar-day.other-month {
+    color: #858092;
+}
+
+:root[data-theme="light"] .calendar-widget .calendar-day.other-month.selected {
+    color: #fff;
+}
+
+:root[data-theme="light"] .sq-appearance-setting {
+    border-color: #e2deeb;
+    background: #f8f7fb;
+}
+
+:root[data-theme="light"] .profile-dialog,
+:root[data-theme="light"] .app-dialog.profile-dialog,
+:root[data-theme="light"] .task-dialog.profile-dialog {
+    background: #fff;
+    color: #29263a;
+}
+
+:root[data-theme="light"] .dashboard-main .calendar-tasks-panel {
+    border: 1px solid #e2deeb;
+    background: #fff;
+    color: #29263a;
+}
+
+:root[data-theme="light"] .dashboard-main .calendar-tasks-panel h2,
+:root[data-theme="light"] .dashboard-main .calendar-tasks-panel p,
+:root[data-theme="light"] .dashboard-main .calendar-tasks-panel .panel-eyebrow,
+:root[data-theme="light"] .dashboard-main .calendar-task-item {
+    color: #29263a;
+}
+
+:root[data-theme="light"] .dashboard-main .calendar-task-item {
+    border-color: #e2deeb;
+    background: #f6f4fa;
+}
+
+:root[data-theme="light"] .dashboard-main .timer-widget {
+    border-color: #e2deeb;
+    background: #fff;
+}
+
+:root[data-theme="light"] .dashboard-main .timer-side-panel {
+    border: 1px solid #e2deeb;
+    background: #f7f5fb;
+    color: #29263a;
+}
+
+:root[data-theme="light"] .dashboard-main .timer-hint,
+:root[data-theme="light"] .dashboard-main .setting-note {
+    color: #696579;
+}
+
+:root[data-theme="light"] .dashboard-main .timer-progress-track {
+    background: #e5e0ef;
+}
+
+:root[data-theme="light"] .dashboard-main .calendar-panel {
+    border: 1px solid #e2deeb;
+}
+
+:root[data-theme="dark"] .dashboard-main .widget-group > label,
+:root[data-theme="dark"] .dashboard-main .category-heading,
+:root[data-theme="dark"] .dashboard-main .section-label,
+:root[data-theme="dark"] .dashboard-main .panel-heading,
+:root[data-theme="dark"] .dashboard-main .timer-content > label,
+:root[data-theme="dark"] .dashboard-main .timer-settings > label {
+    color: #f7f5fc;
+}
+
+:root[data-theme="dark"] .dashboard-main .overview-panel,
+:root[data-theme="dark"] .dashboard-main .task-toolbar {
+    border-color: var(--sq-border);
+    background: #242234;
+}
+
+:root[data-theme="dark"] .dashboard-main .overview-label {
+    color: #c9c4d6;
+}
+
+:root[data-theme="dark"] .dashboard-main .toolbar-heading p,
+:root[data-theme="dark"] .dashboard-main .category-heading p {
+    color: #c9c4d6;
+}
+
+:root[data-theme="dark"] .dashboard-main .calendar-widget {
+    background: #252238;
+}
+
+:root[data-theme="dark"] .dashboard-main .calendar-tasks-panel {
+    background: #343047;
+}
+
+:root[data-theme="dark"] .dashboard-main .timer-widget {
+    background: #242234;
+}
+
+:root[data-theme="dark"] .dashboard-main .timer-side-panel {
+    background: #343047;
+}
+
+/* Keep page-specific legacy styles readable in dark mode. */
+:root[data-theme="dark"] .dashboard-main,
+:root[data-theme="dark"] .main-content {
+    color: var(--sq-content-text);
+}
+
+:root[data-theme="dark"] .dashboard-main :where(
+    h1, h2, h3, h4, h5, h6, p, span, label, strong, small,
+    a, button, li, dt, dd, legend, th, td
+) {
+    color: var(--sq-text);
+}
+
+:root[data-theme="dark"] .dashboard-main :where(
+    .page-subtitle, .welcome-message, .widget-description, .empty-state,
+    .timer-hint, .setting-note, .toolbar-heading p, .category-heading p,
+    .file-size-hint, .page-footer
+) {
+    color: var(--sq-muted);
+}
+
+:root[data-theme="dark"] .dashboard-main :where(
+    .widget, .task-card, .category-section, .timer-widget,
+    .calendar-widget, .calendar-tasks-panel, .task-toolbar,
+    .overview-panel, .timer-side-panel
+) {
+    background: var(--sq-surface);
+    color: var(--sq-text);
+    border-color: var(--sq-border);
+}
+
+:root[data-theme="dark"] .dashboard-main :where(
+    input, select, textarea, .timer-mode, .timer-settings input,
+    .calendar-widget input, .calendar-widget select
+) {
+    background: #302d42;
+    color: var(--sq-text);
+    border-color: #514c65;
+}
+
+:root[data-theme="dark"] .dashboard-main :where(
+    option, optgroup
+) {
+    background: #302d42;
+    color: var(--sq-text);
+}
+
+:root[data-theme="dark"] .main-content :where(
+    h1, h2, h3, h4, h5, h6, p, span, label, strong, small,
+    a, button, li, dt, dd, legend, th, td
+) {
+    color: var(--sq-text);
+}
+
+/* Your Tasks uses a light card surface in every theme. Keep its content dark
+   and reserve light text for controls that have dark surfaces. */
+#protectedTasks :where(
+    .overview-panel, .category-section, .task-card, .empty-category,
+    .add-task-card, .app-dialog, .profile-dialog
+) {
+    background: var(--sq-panel);
+    color: var(--sq-heading);
+    border-color: var(--sq-border);
+}
+
+#protectedTasks :where(
+    .category-heading h2, .category-heading p, .category-count,
+    .task-card-title, .task-card-notes, .task-card-meta, .empty-category,
+    .empty-category strong, .empty-category p, .page-footer,
+    .overview-label, .overview-item strong, .toolbar-heading h2,
+    .toolbar-heading p, .profile-dialog-content h2,
+    .profile-description, .profile-stats strong, .profile-stats span,
+    .app-dialog h2, .app-dialog label, .app-dialog p
+) {
+    color: var(--sq-heading);
+}
+
+#protectedTasks :where(.category-heading p, .task-card-notes,
+    .empty-category p, .toolbar-heading p, .profile-description,
+    .page-footer) {
+    color: var(--sq-muted);
+}
+
+#protectedTasks :where(.category-symbol, .overview-icon) {
+    background: var(--sq-panel-alt);
+    border-color: var(--sq-border);
+    color: var(--sq-link);
+}
+
+#protectedTasks .category-count {
+    background: var(--sq-panel-alt);
+    border-color: var(--sq-border);
+    color: var(--sq-link);
+}
+
+#protectedTasks .add-task-card {
+    background: var(--sq-panel-alt);
+    border-color: var(--sq-border);
+    color: var(--sq-link);
+}
+
+#protectedTasks .add-task-card :where(.plus, span) {
+    color: var(--sq-link);
+}
+
+#protectedTasks .empty-category {
+    background: var(--sq-panel-alt);
+    border-color: var(--sq-border);
+}
+
+#protectedTasks .task-card.completed {
+    background: color-mix(in srgb, var(--sq-panel) 92%, var(--sq-accent));
+}
+
+#protectedTasks :where(.task-action-button, .dialog-close,
+    .app-dialog input, .app-dialog select, .app-dialog textarea) {
+    background: var(--sq-control);
+    border-color: var(--sq-border);
+    color: var(--sq-heading);
+}
+
+#protectedTasks :where(.task-action-button, .dialog-close):hover {
+    background: var(--sq-panel-alt);
+}
+
+#protectedTasks .profile-stats > div {
+    background: var(--sq-panel-alt);
+    border-color: var(--sq-border);
+}
+
+#protectedTasks .profile-close-button,
+#protectedTasks .primary-button {
+    color: var(--sq-accent-foreground);
+    background: var(--sq-accent);
+}
+
+#protectedTasks .secondary-button {
+    color: var(--sq-heading);
+    background: var(--sq-panel-alt);
+    border-color: var(--sq-border);
+}
+
+#protectedTasks .confirm-dialog .danger-button {
+    color: #ffffff;
+}
+
+.sq-appearance-setting,
+.sq-profile-dialog,
+.profile-dialog,
+.app-dialog {
+    color: var(--sq-dialog-text);
+}
+
+.sq-appearance-setting :where(strong, span, label, button),
+.sq-profile-dialog :where(h2, p, button, label, strong, span),
+.profile-dialog :where(h2, p, button, label, strong, span),
+.app-dialog :where(h2, p, button, label, strong, span) {
+    color: var(--sq-dialog-text);
+}
+
+.sq-appearance-setting :where(span, .sq-control-label),
+.sq-profile-dialog .profile-description,
+.profile-dialog .profile-description,
+.app-dialog .dialog-eyebrow,
+.app-dialog label span {
+    color: var(--sq-dialog-muted);
+}
+
+.sq-appearance-setting,
+.sq-profile-dialog,
+.profile-dialog,
+.app-dialog {
+    background: var(--sq-dialog-surface);
+    border-color: var(--sq-border);
+}
+
+.sq-theme-select,
+.sq-appearance-setting input {
+    background: var(--sq-dialog-surface);
+    color: var(--sq-dialog-text);
+    border-color: var(--sq-border);
+}
+
+.sq-theme-select option {
+    background: var(--sq-dialog-surface);
+    color: var(--sq-dialog-text);
+}
+
+:root[data-theme="gradient"] .dashboard-main :where(
+    .calendar-nav-button, .calendar-add-button, .timer-button.primary,
+    .dismiss-alarm-button
+),
+:root[data-theme="light"] .dashboard-main :where(
+    .calendar-nav-button, .calendar-add-button, .timer-button.primary,
+    .dismiss-alarm-button
+) {
+    color: #ffffff;
+}
+
+:root[data-theme="dark"] .dashboard-main :where(
+    .calendar-nav-button, .calendar-add-button, .timer-button.primary,
+    .dismiss-alarm-button
+) {
+    color: #ffffff;
+}
+
+:root[data-theme="gradient"] .dashboard-main .calendar-day.selected,
+:root[data-theme="light"] .dashboard-main .calendar-day.selected,
+:root[data-theme="dark"] .dashboard-main .calendar-day.selected {
+    background: var(--sq-accent);
+    border-color: var(--sq-accent);
+    color: var(--sq-accent-foreground);
+}
+
+:root[data-theme="gradient"] .dashboard-main .today-button,
+:root[data-theme="light"] .dashboard-main .today-button {
+    background: var(--sq-panel-alt);
+    color: var(--sq-link);
+    border-color: var(--sq-border);
+}
+
+:root[data-theme="dark"] .dashboard-main .today-button {
+    background: var(--sq-panel-alt);
+    color: var(--sq-link);
+    border-color: var(--sq-border);
+}
+
+:root[data-theme="gradient"] .dashboard-main :where(
+    .timer-button:not(.primary), .secondary-button
+),
+:root[data-theme="light"] .dashboard-main :where(
+    .timer-button:not(.primary), .secondary-button
+) {
+    background: var(--sq-panel-alt);
+    color: var(--sq-link);
+    border-color: var(--sq-border);
+}
+
+:root[data-theme="dark"] .dashboard-main :where(
+    .timer-button:not(.primary), .secondary-button
+) {
+    background: var(--sq-panel-alt);
+    color: var(--sq-link);
+    border-color: var(--sq-border);
+}
+
+:root[data-theme="dark"] .main-content :where(
+    input, select, textarea, option, optgroup
+) {
+    background: #302d42;
+    color: var(--sq-text);
+    border-color: #514c65;
+}
+
+/* Theme tokens for legacy page components, including generated calendar items. */
+:root[data-theme="dark"] {
+    --sq-panel: #242234;
+    --sq-panel-alt: #343047;
+    --sq-control: #302d42;
+    --sq-heading: #f7f5fc;
+    --sq-link: #d7c8ff;
+}
+
+:root[data-theme="light"] {
+    --sq-panel: #ffffff;
+    --sq-panel-alt: #f7f5fb;
+    --sq-control: #ffffff;
+    --sq-heading: #29263a;
+    --sq-link: #55339b;
+}
+
+:root[data-theme="dark"] :where(
+    .dashboard-main, .main-content, .sidebar, .profile-button
+) {
+    color: var(--sq-text);
+}
+
+:root[data-theme="light"] :where(
+    .dashboard-main, .main-content, .sidebar, .profile-button
+) {
+    color: var(--sq-text);
+}
+
+:root[data-theme="dark"] .dashboard-main :where(
+    .calendar-widget, .calendar-panel, .calendar-tasks-panel,
+    .timer-widget, .timer-side-panel, .widget, .task-card,
+    .category-section, .task-toolbar, .overview-panel
+) {
+    background: var(--sq-panel);
+    color: var(--sq-text);
+    border-color: var(--sq-border);
+}
+
+:root[data-theme="light"] .dashboard-main :where(
+    .calendar-widget, .calendar-panel, .calendar-tasks-panel,
+    .timer-widget, .timer-side-panel, .widget, .task-card,
+    .category-section, .task-toolbar, .overview-panel
+) {
+    background: var(--sq-panel);
+    color: var(--sq-text);
+    border-color: var(--sq-border);
+}
+
+:root[data-theme="dark"] .dashboard-main :where(
+    .calendar-header h2, .calendar-weekdays, .calendar-legend,
+    .calendar-day, .calendar-task-header h2, .calendar-task-header p,
+    .calendar-task-item, .calendar-task-text, .calendar-footnote,
+    .timer-display, .timer-status, .timer-content h2,
+    .widget-heading, .task-name
+) {
+    color: var(--sq-text);
+}
+
+:root[data-theme="light"] .dashboard-main :where(
+    .calendar-header h2, .calendar-weekdays, .calendar-legend,
+    .calendar-day, .calendar-task-header h2, .calendar-task-header p,
+    .calendar-task-item, .calendar-task-text, .calendar-footnote,
+    .timer-display, .timer-status, .timer-content h2,
+    .widget-heading, .task-name
+) {
+    color: var(--sq-text);
+}
+
+:root[data-theme="dark"] .dashboard-main :where(
+    .calendar-day, .calendar-day.other-month
+) {
+    background: var(--sq-panel-alt);
+    color: var(--sq-text);
+}
+
+:root[data-theme="light"] .dashboard-main :where(
+    .calendar-day, .calendar-day.other-month
+) {
+    background: var(--sq-panel-alt);
+    color: var(--sq-text);
+}
+
+:root[data-theme="dark"] .dashboard-main .calendar-day.selected,
+:root[data-theme="light"] .dashboard-main .calendar-day.selected {
+    background: var(--sq-accent);
+    border-color: var(--sq-accent);
+    color: var(--sq-accent-foreground);
+}
+
+:root[data-theme="dark"] .dashboard-main :where(
+    .calendar-weekdays, .calendar-legend, .calendar-footnote,
+    .calendar-task-header p, .panel-eyebrow, .timer-hint, .setting-note,
+    .empty-state, .widget-description
+) {
+    color: var(--sq-muted);
+}
+
+:root[data-theme="light"] .dashboard-main :where(
+    .calendar-weekdays, .calendar-legend, .calendar-footnote,
+    .calendar-task-header p, .panel-eyebrow, .timer-hint, .setting-note,
+    .empty-state, .widget-description
+) {
+    color: var(--sq-muted);
+}
+
+:root[data-theme="dark"] .dashboard-main :where(
+    .calendar-task-item, .timer-side-panel, .task-item
+) {
+    background: var(--sq-panel-alt);
+    border-color: var(--sq-border);
+    color: var(--sq-text);
+}
+
+:root[data-theme="light"] .dashboard-main :where(
+    .calendar-task-item, .timer-side-panel, .task-item
+) {
+    background: var(--sq-panel-alt);
+    border-color: var(--sq-border);
+    color: var(--sq-text);
+}
+
+:root[data-theme="dark"] .dashboard-main :where(
+    .timer-mode, .timer-settings input, .calendar-widget input,
+    .calendar-widget select, .task-dialog input, .task-dialog select,
+    input, select, textarea
+),
+:root[data-theme="light"] .dashboard-main :where(
+    .timer-mode, .timer-settings input, .calendar-widget input,
+    .calendar-widget select, .task-dialog input, .task-dialog select,
+    input, select, textarea
+) {
+    background: var(--sq-control);
+    color: var(--sq-text);
+    border-color: var(--sq-border);
+}
+
+:root[data-theme="dark"] :where(
+    .task-dialog, .profile-dialog, .sq-profile-dialog
+),
+:root[data-theme="light"] :where(
+    .task-dialog, .profile-dialog, .sq-profile-dialog
+) {
+    background: var(--sq-panel);
+    color: var(--sq-text);
+    border-color: var(--sq-border);
+}
+
+:root[data-theme="dark"] :where(
+    .task-dialog h2, .task-dialog label, .task-dialog p,
+    .profile-dialog h2, .profile-dialog p, .profile-dialog label,
+    .sq-profile-dialog h2, .sq-profile-dialog p
+),
+:root[data-theme="light"] :where(
+    .task-dialog h2, .task-dialog label, .task-dialog p,
+    .profile-dialog h2, .profile-dialog p, .profile-dialog label,
+    .sq-profile-dialog h2, .sq-profile-dialog p
+) {
+    color: var(--sq-text);
+}
+
+:root[data-theme="dark"] :where(
+    .task-dialog input, .task-dialog select, .task-dialog option,
+    .sq-theme-select, .sq-theme-select option
+),
+:root[data-theme="light"] :where(
+    .task-dialog input, .task-dialog select, .task-dialog option,
+    .sq-theme-select, .sq-theme-select option
+) {
+    background: var(--sq-control);
+    color: var(--sq-text);
+    border-color: var(--sq-border);
+}
+
+:root[data-theme="dark"] input::placeholder,
+:root[data-theme="dark"] textarea::placeholder {
+    color: var(--sq-muted);
+    opacity: 1;
+}
+
+:root[data-theme="light"] input::placeholder,
+:root[data-theme="light"] textarea::placeholder {
+    color: var(--sq-muted);
+    opacity: 1;
+}
+
+:root[data-theme="dark"] .sidebar :where(.sidebar-label, .sidebar-note p),
+:root[data-theme="light"] .sidebar :where(.sidebar-label, .sidebar-note p) {
+    color: var(--sq-muted);
+}
+
+:root[data-theme="dark"] .main-content :where(
+    .upload-section, .preview-section, .files-section,
+    .selected-file, .upload-dropzone, .file-card
+) {
+    background: var(--sq-panel);
+    color: var(--sq-text);
+    border-color: var(--sq-border);
+}
+
+:root[data-theme="light"] .main-content :where(
+    .upload-section, .preview-section, .files-section,
+    .selected-file, .upload-dropzone, .file-card
+) {
+    background: var(--sq-panel);
+    color: var(--sq-text);
+    border-color: var(--sq-border);
+}
+
+:root[data-theme="dark"] .main-content :where(
+    .upload-dropzone strong, .file-card strong, .file-meta,
+    .file-size-hint, .muted, .message, .page-footer
+),
+:root[data-theme="light"] .main-content :where(
+    .upload-dropzone strong, .file-card strong, .file-meta,
+    .file-size-hint, .muted, .message, .page-footer
+) {
+    color: var(--sq-text);
+}
+
+:root[data-theme="dark"] .main-content :where(
+    .upload-dropzone, .choose-file-button, .file-action,
+    input, select, textarea
+),
+:root[data-theme="light"] .main-content :where(
+    .upload-dropzone, .choose-file-button, .file-action,
+    input, select, textarea
+) {
+    background: var(--sq-control);
+    color: var(--sq-text);
+    border-color: var(--sq-border);
+}
+
+:root[data-theme="light"] #homePage .progress-widget {
+    background: var(--sq-panel);
+    color: var(--sq-heading);
+    border-color: var(--sq-border);
+}
+
+:root[data-theme="light"] #homePage .progress-stat {
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+:root[data-theme="light"] #homePage .progress-stat:hover {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+:root[data-theme="light"] #homePage .progress-widget :where(
+    span, strong, small
+) {
+    color: var(--sq-heading);
+}
+
+:root[data-theme="dark"] #homePage .progress-widget {
+    background: var(--sq-panel);
+    color: var(--sq-text);
+    border-color: var(--sq-border);
+}
+
+:root[data-theme="dark"] #homePage .progress-stat {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+:root[data-theme="dark"] #homePage .progress-stat:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+:root[data-theme="dark"] #homePage .progress-widget :where(
+    span, strong, small
+) {
+    color: var(--sq-text);
+}
+
+:root[data-theme="dark"] #homePage .progress-widget .study-time-button small,
+:root[data-theme="light"] #homePage .progress-widget .study-time-button small {
+    color: var(--sq-muted);
+}
+
+.confirm-dialog {
+    width: min(440px, calc(100% - 32px));
+}
+
+.confirm-content h2 {
+    margin: 0;
+    color: var(--sq-text);
+    font-size: 21px;
+    font-weight: 400;
+}
+
+.confirm-content > p:not(.dialog-eyebrow) {
+    margin: 12px 0;
+    color: var(--sq-muted);
+    line-height: 1.5;
+}
+
+.confirm-content .dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.confirm-content .dialog-cancel,
+.confirm-content .dialog-save {
+    min-height: 38px;
+    padding: 9px 13px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.confirm-content .dialog-cancel {
+    color: var(--sq-text);
+    background: var(--sq-panel-alt);
+    border: 1px solid var(--sq-border);
+}
+
+.confirm-content .dialog-save {
+    color: var(--sq-accent-foreground);
+    background: var(--sq-accent);
+    border: 1px solid var(--sq-accent);
+}
+
+/* Final component contrast map for both selectable themes. */
+:root[data-theme="gradient"] .dashboard-main :where(
+    .widget, .progress-widget, .calendar-panel, .calendar-tasks-panel,
+    .timer-widget, .timer-side-panel, .task-card, .category-section,
+    .task-toolbar, .overview-panel
+),
+:root[data-theme="light"] .dashboard-main :where(
+    .widget, .progress-widget, .calendar-panel, .calendar-tasks-panel,
+    .timer-widget, .timer-side-panel, .task-card, .category-section,
+    .task-toolbar, .overview-panel
+) {
+    background: var(--sq-panel);
+    color: var(--sq-heading);
+    border-color: var(--sq-border);
+}
+
+:root[data-theme="gradient"] .dashboard-main :where(
+    .widget, .progress-widget, .calendar-panel, .calendar-tasks-panel,
+    .timer-widget, .timer-side-panel, .task-card, .category-section,
+    .task-toolbar, .overview-panel
+) :where(h1, h2, h3, h4, h5, h6, p, span, strong, small, label, button),
+:root[data-theme="light"] .dashboard-main :where(
+    .widget, .progress-widget, .calendar-panel, .calendar-tasks-panel,
+    .timer-widget, .timer-side-panel, .task-card, .category-section,
+    .task-toolbar, .overview-panel
+) :where(h1, h2, h3, h4, h5, h6, p, span, strong, small, label, button) {
+    color: var(--sq-heading);
+}
+
+:root[data-theme="dark"] .dashboard-main :where(
+    .widget, .progress-widget, .calendar-panel, .calendar-tasks-panel,
+    .timer-widget, .timer-side-panel, .task-card, .category-section,
+    .task-toolbar, .overview-panel
+) :where(h1, h2, h3, h4, h5, h6, p, span, strong, small, label, button) {
+    color: var(--sq-text);
+}
+
+:root[data-theme="gradient"] .dashboard-main :where(
+    .calendar-weekdays, .calendar-legend, .calendar-footnote,
+    .calendar-task-header p, .panel-eyebrow, .timer-hint, .setting-note,
+    .empty-state, .widget-description
+),
+:root[data-theme="light"] .dashboard-main :where(
+    .calendar-weekdays, .calendar-legend, .calendar-footnote,
+    .calendar-task-header p, .panel-eyebrow, .timer-hint, .setting-note,
+    .empty-state, .widget-description
+) {
+    color: var(--sq-muted);
+}
+
+:root[data-theme="dark"] .dashboard-main :where(
+    .calendar-day, .calendar-day.other-month, .calendar-task-item,
+    .task-item, .timer-side-panel
+) {
+    background: var(--sq-panel-alt);
+    color: var(--sq-text);
+    border-color: var(--sq-border);
+}
+
+:root[data-theme="gradient"] .dashboard-main :where(
+    .calendar-day, .calendar-day.other-month, .calendar-task-item,
+    .task-item, .timer-side-panel
+),
+:root[data-theme="light"] .dashboard-main :where(
+    .calendar-day, .calendar-day.other-month, .calendar-task-item,
+    .task-item, .timer-side-panel
+) {
+    background: var(--sq-panel-alt);
+    color: var(--sq-heading);
+    border-color: var(--sq-border);
+}
+
+:root[data-theme="gradient"] .dashboard-main :where(
+    input, select, textarea, .timer-mode, .timer-settings input,
+    .calendar-widget input, .calendar-widget select
+),
+:root[data-theme="light"] .dashboard-main :where(
+    input, select, textarea, .timer-mode, .timer-settings input,
+    .calendar-widget input, .calendar-widget select
+) {
+    background: var(--sq-control);
+    color: var(--sq-heading);
+    border-color: var(--sq-border);
+}
+
+:root[data-theme="dark"] .dashboard-main :where(
+    input, select, textarea, .timer-mode, .timer-settings input,
+    .calendar-widget input, .calendar-widget select
+) {
+    background: var(--sq-control);
+    color: var(--sq-text);
+    border-color: var(--sq-border);
+}
+
+:root[data-theme="gradient"] .main-content,
+:root[data-theme="light"] .main-content {
+    color: var(--sq-text);
+}
+
+:root[data-theme="gradient"] .main-content :where(
+    .upload-section, .preview-section, .files-section, .file-card,
+    .selected-file, .upload-dropzone, .preview-content
+),
+:root[data-theme="light"] .main-content :where(
+    .upload-section, .preview-section, .files-section, .file-card,
+    .selected-file, .upload-dropzone, .preview-content
+) {
+    background: var(--sq-panel);
+    color: var(--sq-heading);
+    border-color: var(--sq-border);
+}
+
+:root[data-theme="gradient"] .main-content :where(
+    .upload-section, .preview-section, .files-section, .file-card,
+    .selected-file, .upload-dropzone, .preview-content, .task-dialog
+) :where(
+    h1, h2, h3, h4, h5, h6, p, span, strong, small, label, button,
+    a, .file-name, .file-meta, .file-size-hint, .muted, .message,
+    #zoomLevel
+),
+:root[data-theme="light"] .main-content :where(
+    .upload-section, .preview-section, .files-section, .file-card,
+    .selected-file, .upload-dropzone, .preview-content, .task-dialog
+) :where(
+    h1, h2, h3, h4, h5, h6, p, span, strong, small, label, button,
+    a, .file-name, .file-meta, .file-size-hint, .muted, .message,
+    #zoomLevel
+) {
+    color: var(--sq-heading);
+}
+
+:root[data-theme="dark"] .main-content :where(
+    .upload-section, .preview-section, .files-section, .file-card,
+    .selected-file, .upload-dropzone, .preview-content, .task-dialog
+) :where(
+    h1, h2, h3, h4, h5, h6, p, span, strong, small, label, button,
+    a, .file-name, .file-meta, .file-size-hint, .muted, .message,
+    #zoomLevel
+) {
+    color: var(--sq-text);
+}
+
+/* Explicit high-contrast white styling for topbar curriculum heading & footer */
+.curriculum-heading .eyebrow,
+:root .curriculum-heading .eyebrow,
+:root[data-theme="gradient"] .curriculum-heading .eyebrow {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.curriculum-heading h1,
+:root .curriculum-heading h1,
+:root[data-theme="gradient"] .curriculum-heading h1 {
+    color: #ffffff !important;
+}
+
+.curriculum-heading .page-subtitle,
+:root .curriculum-heading .page-subtitle,
+:root[data-theme="gradient"] .curriculum-heading .page-subtitle {
+    color: rgba(255, 255, 255, 0.92) !important;
+}
+
+.curriculum-main .page-footer,
+.curriculum-main .page-footer span,
+:root[data-theme="gradient"] .curriculum-main .page-footer,
+:root[data-theme="gradient"] .curriculum-main .page-footer span {
+    color: rgba(255, 255, 255, 0.78) !important;
+}
+
+@media (max-width: 850px) {
+    .dashboard-page .dashboard-main,
+    .app-layout > .main-content {
+        padding-right: 22px;
+        padding-left: 22px;
+    }
+
+    .dashboard-main > .topbar.curriculum-heading,
+    .main-content > .topbar.curriculum-heading {
+        flex-wrap: wrap;
+    }
+
+    .task-categories {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 650px) {
+    :root {
+        --sq-sidebar-width: 68px;
+    }
+
+    .dashboard-page .sidebar,
+    .app-layout > .sidebar {
+        align-items: center;
+        padding: 16px 7px 12px;
+    }
+
+    .dashboard-page .sidebar .brand,
+    .app-layout > .sidebar .brand {
+        justify-content: center;
+        width: 100%;
+        margin: 0 0 24px;
+    }
+
+    .dashboard-page .sidebar .brand span,
+    .app-layout > .sidebar .brand span,
+    .dashboard-page .sidebar .sidebar-label,
+    .app-layout > .sidebar .sidebar-label,
+    .dashboard-page .sidebar .sidebar-note,
+    .app-layout > .sidebar .sidebar-note,
+    .dashboard-page .sidebar .sidebar-bottom,
+    .app-layout > .sidebar .sidebar-bottom,
+    .dashboard-page .sidebar .nav-item > span:not(.nav-icon),
+    .app-layout > .sidebar .nav-item > span:not(.nav-icon),
+    .dashboard-page .sidebar .profile-details,
+    .app-layout > .sidebar .profile-details,
+    .dashboard-page .sidebar .profile-arrow,
+    .app-layout > .sidebar .profile-arrow {
+        display: none !important;
+    }
+
+    .dashboard-page .sidebar .brand img,
+    .app-layout > .sidebar .brand img {
+        width: 42px;
+        height: 42px;
+    }
+
+    .dashboard-page .sidebar .sidebar-nav,
+    .app-layout > .sidebar .sidebar-nav {
+        width: 100%;
+    }
+
+    .dashboard-page .sidebar .nav-item,
+    .app-layout > .sidebar .nav-item {
+        justify-content: center;
+        width: 100%;
+        min-height: 46px;
+        padding: 0;
+    }
+
+    .dashboard-page .sidebar .nav-icon,
+    .app-layout > .sidebar .nav-icon {
+        flex: 0 0 auto;
+    }
+
+    .dashboard-page .sidebar .profile-button,
+    .app-layout > .sidebar .profile-button {
+        justify-content: center;
+        width: 48px;
+        min-width: 0;
+        padding: 6px;
+    }
+
+    .dashboard-page .dashboard-main,
+    .app-layout > .main-content {
+        width: calc(100% - var(--sq-sidebar-width));
+        margin-left: var(--sq-sidebar-width);
+        padding: 25px 16px 28px;
+    }
+
+    .dashboard-main > .topbar.curriculum-heading,
+    .main-content > .topbar.curriculum-heading {
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .curriculum-header-actions {
+        justify-content: flex-start;
+    }
+
+    .task-categories {
+        display: grid !important;
+        flex: none !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        overflow: visible !important;
+        gap: 18px;
+    }
+
+    .task-categories .category-section {
+        width: 100%;
+        min-width: 0;
+        flex: none;
+        overflow: visible;
+    }
+
+    .dashboard-main .overview-label,
+    .dashboard-main .toolbar-heading h2,
+    .dashboard-main .filter-control,
+    .dashboard-main .filter-control select,
+    .dashboard-main .category-heading h2,
+    .dashboard-main .category-count {
+        font-size: 12px;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .sq-profile-content {
+        padding: 24px 18px;
+    }
+}
+
+/* Timer Enhancements Theme Support */
+:root[data-theme="light"] .dashboard-main :where(.timer-tool-button, .quick-adjust-btn) {
+    background: #f0ecf8;
+    color: #433273;
+    border-color: #d8d0ec;
+}
+
+:root[data-theme="light"] .dashboard-main :where(.timer-tool-button, .quick-adjust-btn):hover {
+    background: #e4dcf4;
+}
+
+:root[data-theme="light"] .dashboard-main .timer-reminder-banner:not(.active-alarm):not(.triggered) {
+    background: #f4f0fb;
+    border-color: #dcd4f0;
+    color: #40326e;
+}
+
+:root[data-theme="light"] .dashboard-main .reminder-preset-btn {
+    background: #eee8f8;
+    border-color: #d5caee;
+    color: #3b2c68;
+}
+
+:root[data-theme="light"] .dashboard-main .reminder-preset-btn:hover,
+:root[data-theme="light"] .dashboard-main .reminder-preset-btn.active {
+    background: #7954c7;
+    color: #ffffff;
+    border-color: #7954c7;
+}
+
+:root[data-theme="light"] .dashboard-main .time-input-field input {
+    background: #ffffff;
+    border-color: #d8d2e5;
+    color: #29263a;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}

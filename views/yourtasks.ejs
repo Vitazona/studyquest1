@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/_head', { title: 'Your Tasks' }) %>
+    <meta name="theme-color" content="#10004d">
+    <link rel="stylesheet" href="/css/yourtasks.css">
+    <script src="/js/yourtasks.js" defer></script>
+</head>
+<body>
+
+    <main class="dashboard-page" id="protectedTasks">
+
+        <div class="dashboard-layout">
+
+            <%- include('partials/_sidebar') %>
+
+            <section class="dashboard-main">
+
+                <header class="topbar curriculum-heading">
+                    <div>
+                        <p class="eyebrow">YOUR PERSONAL QUEST BOARD</p>
+                        <h1>YOUR TASKS</h1>
+                        <p class="page-subtitle">
+                            Every small step brings you closer to your goals.
+                        </p>
+                    </div>
+
+                    <div class="curriculum-header-actions">
+                        <div class="topbar-badge">
+                            <span class="status-dot"></span>
+                            Your task board
+                        </div>
+                        <button class="logout-button" id="logoutButton"
+                                type="button">LOG OUT</button>
+                    </div>
+                </header>
+
+                <section class="overview-panel" aria-label="Task overview">
+                    <div class="overview-item">
+                        <span class="overview-icon">✦</span>
+                        <div>
+                            <span class="overview-label">TOTAL TASKS</span>
+                            <strong id="totalCount">0</strong>
+                        </div>
+                    </div>
+
+                    <div class="overview-item">
+                        <span class="overview-icon">✓</span>
+                        <div>
+                            <span class="overview-label">COMPLETED</span>
+                            <strong id="completedCount">0</strong>
+                        </div>
+                    </div>
+
+                    <div class="overview-item">
+                        <span class="overview-icon">◷</span>
+                        <div>
+                            <span class="overview-label">REMAINING</span>
+                            <strong id="remainingCount">0</strong>
+                        </div>
+                    </div>
+
+                    <div class="overview-item progress-overview">
+                        <div class="overview-progress-heading">
+                            <span class="overview-label">OVERALL PROGRESS</span>
+                            <strong id="progressPercent">0%</strong>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="task-toolbar">
+                    <div class="toolbar-heading">
+                        <h2>MY QUEST BOARD</h2>
+                        <p>Organize your tasks and track your progress.</p>
+                    </div>
+
+                    <label class="filter-control">
+                        <span>SHOW</span>
+                        <select id="taskFilter">
+                            <option value="all">All tasks</option>
+                            <option value="incomplete">Incomplete</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="task-categories" tabindex="0"
+                     aria-label="Task categories">
+
+                    <section class="category-section"
+                             data-category-section="today">
+                        <div class="category-heading">
+                            <div class="category-title-group">
+                                <span class="category-symbol today-symbol">☀</span>
+                                <div>
+                                    <h2>TODAY'S TASKS</h2>
+                                    <p>Focus on what matters today.</p>
+                                </div>
+                            </div>
+
+                            <span class="category-count" id="todayCount">0 TASKS</span>
+                        </div>
+
+                        <div class="task-card-grid" id="todayTaskList"></div>
+                    </section>
+
+                    <section class="category-section"
+                             data-category-section="daily">
+                        <div class="category-heading">
+                            <div class="category-title-group">
+                                <span class="category-symbol daily-symbol">↻</span>
+                                <div>
+                                    <h2>DAILY TASKS</h2>
+                                    <p>Build good habits, one day at a time.</p>
+                                </div>
+                            </div>
+
+                            <span class="category-count" id="dailyCount">0 TASKS</span>
+                        </div>
+
+                        <div class="task-card-grid" id="dailyTaskList"></div>
+                    </section>
+
+                    <section class="category-section"
+                             data-category-section="weekly">
+                        <div class="category-heading">
+                            <div class="category-title-group">
+                                <span class="category-symbol weekly-symbol">✧</span>
+                                <div>
+                                    <h2>WEEKLY TASKS</h2>
+                                    <p>Make steady progress toward your goals.</p>
+                                </div>
+                            </div>
+
+                            <span class="category-count" id="weeklyCount">0 TASKS</span>
+                        </div>
+
+                        <div class="task-card-grid" id="weeklyTaskList"></div>
+                    </section>
+
+                </div>
+
+                <footer class="page-footer">
+                    <span>STUDY QUEST</span>
+                    <span>ONE TASK AT A TIME.</span>
+                </footer>
+
+            </section>
+        </div>
+
+        <div class="toast" id="toast" role="status"
+             aria-live="polite" hidden></div>
+
+        <!-- ADD / EDIT TASK POP-UP -->
+        <dialog class="app-dialog" id="taskDialog">
+            <form id="taskForm">
+                <div class="dialog-heading">
+                    <div>
+                        <p class="dialog-eyebrow">YOUR NEXT QUEST</p>
+                        <h2 id="taskDialogTitle">Add a task</h2>
+                    </div>
+
+                    <button class="dialog-close" id="closeTaskDialog"
+                            type="button" aria-label="Close dialog">×</button>
+                </div>
+
+                <label for="taskTitle">Task name</label>
+                <input id="taskTitle" name="taskTitle" type="text"
+                       maxlength="100"
+                       placeholder="e.g. Review Chapter 1"
+                       required>
+
+                <label for="taskCategory">Task category</label>
+                <select id="taskCategory" name="taskCategory" required>
+                    <option value="today">Today's Tasks</option>
+                    <option value="daily">Daily Tasks</option>
+                    <option value="weekly">Weekly Tasks</option>
+                </select>
+
+                <label for="taskDueDate">Due date <span>(optional)</span></label>
+                <input id="taskDueDate" name="taskDueDate" type="date">
+
+                <label for="taskNotes">Notes <span>(optional)</span></label>
+                <textarea id="taskNotes" name="taskNotes" rows="3"
+                          maxlength="500"
+                          placeholder="Add details or reminders..."></textarea>
+
+                <div class="dialog-actions">
+                    <button class="secondary-button" id="cancelTaskButton"
+                            type="button">CANCEL</button>
+                    <button class="primary-button" type="submit"
+                            id="saveTaskButton">SAVE TASK</button>
+                </div>
+            </form>
+        </dialog>
+
+        <!-- PROFILE POP-UP -->
+        <dialog class="app-dialog profile-dialog" id="profileDialog">
+            <div class="profile-dialog-content">
+                <div class="large-avatar" aria-hidden="true">♟</div>
+                <p class="dialog-eyebrow">YOUR ADVENTURER PROFILE</p>
+                <h2 id="profileDialogName"><%= typeof user !== 'undefined' && user.username ? user.username : 'username' %></h2>
+                <p class="profile-description">
+                    Keep going! Every completed task is progress.
+                </p>
+                <div class="profile-stats">
+                    <div>
+                        <strong id="profileCompleted">0</strong>
+                        <span>COMPLETED</span>
+                    </div>
+                    <div>
+                        <strong id="profileTotal">0</strong>
+                        <span>TOTAL TASKS</span>
+                    </div>
+                </div>
+                <button class="primary-button profile-close-button"
+                        id="closeProfileButton" type="button">
+                    CLOSE
+                </button>
+            </div>
+        </dialog>
+
+        <!-- DELETE CONFIRMATION POP-UP -->
+        <dialog class="app-dialog confirm-dialog" id="deleteDialog">
+            <div class="confirm-content">
+                <p class="dialog-eyebrow">QUEST MANAGEMENT</p>
+                <h2>Delete this task?</h2>
+                <p>This task will be removed from your quest board.</p>
+
+                <div class="dialog-actions">
+                    <button class="secondary-button" id="cancelDeleteButton"
+                            type="button">KEEP TASK</button>
+                    <button class="danger-button" id="confirmDeleteButton"
+                            type="button">DELETE TASK</button>
+                </div>
+            </div>
+        </dialog>
+
+    </main>
+</body>
+</html>
+

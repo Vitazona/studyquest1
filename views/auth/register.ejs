@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/_head', { title: 'Sign Up' }) %>
+    <link rel="stylesheet" href="/css/registration.css">
+</head>
+<body>
+    <%- include('../partials/_theme-button') %>
+
+    <main class="auth-page registration-page">
+        <div class="purple-strip"></div>
+
+        <section class="auth-background">
+            <div class="auth-content">
+                <img
+                    src="/assets/study-quest-logo.svg"
+                    alt="Study Quest Logo"
+                    class="auth-logo"
+                >
+
+                <form class="auth-card register-card" id="registerForm">
+                    <h2>SIGN UP</h2>
+
+                    <div class="form-group">
+                        <label for="regUsername">USERNAME:</label>
+                        <input
+                            type="text"
+                            id="regUsername"
+                            name="username"
+                            minlength="5"
+                            maxlength="30"
+                            pattern="[A-Za-z0-9_]{5,30}"
+                            autocomplete="username"
+                            required
+                        >
+                        <small class="field-hint">
+                            Use 5-30 characters: letters, numbers, or underscores.
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="regPassword">PASSWORD:</label>
+
+                        <div class="password-wrapper">
+                            <input
+                                type="password"
+                                id="regPassword"
+                                name="password"
+                                minlength="8"
+                                maxlength="72"
+                                autocomplete="new-password"
+                                required
+                            >
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                data-target="regPassword"
+                                aria-label="Show password"
+                                aria-pressed="false"
+                            >
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <small class="field-hint">
+                            At least 8 characters, including uppercase, lowercase, number, and symbol.
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">CONFIRM PASSWORD:</label>
+
+                        <div class="password-wrapper">
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                autocomplete="new-password"
+                                required
+                            >
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                data-target="confirmPassword"
+                                aria-label="Show confirm password"
+                                aria-pressed="false"
+                            >
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <small class="field-hint">
+                            Enter the same password again.
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="regEmail">EMAIL:</label>
+                        <input
+                            type="email"
+                            id="regEmail"
+                            name="email"
+                            autocomplete="email"
+                            required
+                        >
+                        <small class="field-hint">
+                            Enter a valid email address.
+                        </small>
+                    </div>
+
+                    <p
+                        class="form-message"
+                        id="registerMessage"
+                        aria-live="polite"
+                    ></p>
+
+                    <div class="register-submit">
+                        <button
+                            class="btn-primary"
+                            id="registerSubmit"
+                            type="submit"
+                            disabled
+                        >
+                            REGISTER
+                        </button>
+                    </div>
+
+                    <div class="account-switch">
+                        <span class="account-divider"><span>OR</span></span>
+
+                        <div class="account-prompt">
+                            <span>Already have an account?</span>
+                            <a class="btn-outline" href="/login">
+                                LOG IN
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <div class="purple-strip bottom-strip"></div>
+    </main>
+
+    <script src="/js/auth.js" defer></script>
+</body>
+</html>
+

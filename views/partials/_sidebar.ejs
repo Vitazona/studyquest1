@@ -1,0 +1,60 @@
+<aside class="sidebar" id="sidebar">
+
+    <a href="/home" class="brand">
+        <img src="/assets/study-quest-logo.svg" alt="Study Quest Logo">
+        <span>Study Quest</span>
+    </a>
+
+    <p class="sidebar-label">MENU</p>
+
+    <nav class="sidebar-nav" aria-label="Main navigation">
+        <a class="nav-item <%= activePage === 'home' ? 'active' : '' %>" href="/home"
+           aria-label="Home" title="Home"
+           <%- activePage === 'home' ? 'aria-current="page"' : '' %>>
+            <span class="nav-icon" aria-hidden="true">⌂</span>
+            <span>Home</span>
+        </a>
+        <a class="nav-item <%= activePage === 'yourtasks' ? 'active' : '' %>" href="/yourtasks"
+           aria-label="Your Tasks" title="Your Tasks"
+           <%- activePage === 'yourtasks' ? 'aria-current="page"' : '' %>>
+            <span class="nav-icon" aria-hidden="true">☑</span>
+            <span>Your Tasks</span>
+        </a>
+        <a class="nav-item <%= activePage === 'calendar' ? 'active' : '' %>" href="/calendar"
+           aria-label="Calendar & Time" title="Calendar & Time"
+           <%- activePage === 'calendar' ? 'aria-current="page"' : '' %>>
+            <span class="nav-icon" aria-hidden="true">▦</span>
+            <span>Calendar &amp; Time</span>
+        </a>
+        <a class="nav-item <%= activePage === 'curriculum' ? 'active' : '' %>" href="/curriculum"
+           aria-label="Curriculum" title="Curriculum"
+           <%- activePage === 'curriculum' ? 'aria-current="page"' : '' %>>
+            <span class="nav-icon" aria-hidden="true">▤</span>
+            <span>Curriculum</span>
+        </a>
+    </nav>
+
+    <div class="sidebar-note">
+        <span class="note-icon">✦</span>
+        <p>Every small step brings you closer to your goals.</p>
+    </div>
+
+    <button class="profile-button" id="profileButton"
+            type="button" aria-label="Open user profile">
+        <span class="profile-avatar" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="8" r="4" fill="currentColor"/>
+                <path d="M4.5 21c0-4.2 3.1-7 7.5-7s7.5 2.8 7.5 7" fill="currentColor"/>
+            </svg>
+        </span>
+
+        <span class="profile-details">
+            <span class="profile-username" id="profileUsername"><%= typeof user !== 'undefined' && user.username ? user.username : 'username' %></span>
+            <span class="profile-level">LEVEL 0</span>
+        </span>
+
+        <span class="profile-arrow" aria-hidden="true">›</span>
+    </button>
+
+</aside>
+

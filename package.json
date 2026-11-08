@@ -1,0 +1,35 @@
+{
+  "name": "study-quest",
+  "version": "1.0.0",
+  "description": "Study Quest - Student productivity and curriculum management web app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "study",
+    "tasks",
+    "calendar",
+    "curriculum",
+    "express",
+    "ejs",
+    "mongodb"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "connect-mongo": "^6.0.0",
+    "dotenv": "^18.0.9",
+    "ejs": "^3.1.10",
+    "express": "^5.3.0",
+    "express-session": "^1.19.0",
+    "mongodb": "^7.7.0",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

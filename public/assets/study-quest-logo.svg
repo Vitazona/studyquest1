@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+<title id="title">Study Quest book and feather</title>
+<g fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M18 31 Q39 34 57 52 L57 91 Q37 74 12 73 Z"/>
+  <path d="M102 31 Q81 34 63 52 L63 91 Q83 74 108 73 Z"/>
+  <path d="M18 80 Q39 82 57 98 M102 80 Q81 82 63 98"/>
+  <path d="M60 47 L60 104"/>
+</g>
+<path d="M60 95 C52 72 55 42 87 13 C86 38 80 65 60 95Z" fill="#c9c9d5"/>
+<path d="M60 88 C65 65 76 43 87 13 M62 68 L78 57 M61 79 L75 70 M67 54 L80 42" fill="none" stroke="#c9c9d5" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

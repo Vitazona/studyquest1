@@ -1,0 +1,103 @@
+@import url('auth.css');
+
+.registration-page .register-card {
+    padding-bottom: 16px;
+}
+
+.registration-page .register-card h2 {
+    margin-bottom: 20px;
+}
+
+.registration-page .register-card .form-group {
+    margin-bottom: 12px;
+}
+
+.registration-page .register-submit {
+    margin-top: 24px;
+}
+
+.registration-page .register-submit .btn-primary {
+    width: 100%;
+}
+
+.registration-page .account-switch {
+    margin-top: 18px;
+}
+
+.registration-page .account-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #7a8190;
+    font-size: 12px;
+    text-align: center;
+}
+
+.registration-page .account-divider::before,
+.registration-page .account-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #ddd;
+}
+
+.registration-page .account-prompt {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 18px;
+    color: #53617a;
+    font-size: 12px;
+}
+
+:root[data-theme="dark"] .registration-page .account-divider,
+:root[data-theme="dark"] .registration-page .account-prompt,
+:root[data-theme="light"] .registration-page .account-divider,
+:root[data-theme="light"] .registration-page .account-prompt {
+    color: var(--auth-muted);
+}
+
+:root[data-theme="dark"] .registration-page .account-divider::before,
+:root[data-theme="dark"] .registration-page .account-divider::after,
+:root[data-theme="light"] .registration-page .account-divider::before,
+:root[data-theme="light"] .registration-page .account-divider::after {
+    background: var(--auth-border);
+}
+
+@media (max-width: 480px) {
+    .registration-page .account-prompt {
+        font-size: 11px;
+    }
+
+    .registration-page .btn-outline {
+        min-width: 86px;
+    }
+}
+
+@media (max-height: 800px) {
+    .registration-page .register-card h2 {
+        margin-bottom: 8px;
+    }
+
+    .registration-page .register-card .form-group {
+        margin-bottom: 6px;
+    }
+
+    .registration-page .field-hint {
+        margin-top: 2px;
+        font-size: 10px;
+    }
+
+    .registration-page .register-submit {
+        margin-top: 10px;
+    }
+
+    .registration-page .account-switch {
+        margin-top: 8px;
+    }
+
+    .registration-page .account-prompt {
+        margin-top: 8px;
+    }
+}

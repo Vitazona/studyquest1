@@ -1,0 +1,8 @@
+@import url('auth.css');
+
+.login-page .form-buttons {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 28px;
+}

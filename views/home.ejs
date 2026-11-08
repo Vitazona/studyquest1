@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/_head', { title: 'Home' }) %>
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+
+    <main class="dashboard-page" id="protectedHome">
+
+        <div class="dashboard-layout">
+
+            <%- include('partials/_sidebar') %>
+
+            <section class="dashboard-main" id="homePage">
+                <header class="topbar curriculum-heading">
+                    <div>
+                        <p class="eyebrow">YOUR LEARNING SPACE</p>
+                        <h1>Home</h1>
+                        <p class="page-subtitle welcome-message" id="welcomeText">
+                            Welcome back, <%= typeof user !== 'undefined' && user.username ? user.username : 'Explorer' %>!
+                        </p>
+                    </div>
+                    <div class="curriculum-header-actions">
+                        <div class="topbar-badge">
+                            <span class="status-dot"></span>
+                            Your study space
+                        </div>
+                        <button class="logout-button" id="logoutButton"
+                                type="button">LOG OUT</button>
+                    </div>
+                </header>
+
+                <div class="dashboard-grid">
+
+                    <div class="left-widgets">
+
+                        <section class="widget-group">
+                            <label>DATE</label>
+                            <div class="widget date-widget">
+                                <span class="date-day" id="dateDay">00</span>
+                                <span class="date-month" id="dateMonth">
+                                    Loading date...
+                                </span>
+                                <span class="date-year" id="dateYear"></span>
+                                <span class="date-weekday" id="dateWeekday"></span>
+                            </div>
+                        </section>
+
+                        <section class="widget-group">
+                            <label>TODAY'S FOCUS</label>
+                            <div class="widget today-widget">
+
+                                <div class="widget-heading">
+                                    <span>Today's Tasks</span>
+                                    <span class="task-count" id="todayCount">0</span>
+                                </div>
+
+                                <p class="widget-description">
+                                    Stay focused on what matters today.
+                                </p>
+
+                                <div class="task-list" id="todayTaskList">
+                                    <p class="empty-state">
+                                        No tasks yet. Add your first task!
+                                    </p>
+                                </div>
+
+                            </div>
+                        </section>
+
+                    </div>
+
+                    <div class="right-widgets">
+
+                        <section class="widget-group">
+                            <label>PROGRESSION</label>
+
+                            <div class="progress-widget">
+                                <div class="progress-stat">
+                                    <span>COMPLETED TASKS</span>
+                                    <strong id="completedCount">0</strong>
+                                </div>
+
+                                <div class="progress-stat">
+                                    <span>INCOMPLETE TASKS</span>
+                                    <strong id="incompleteCount">0</strong>
+                                </div>
+
+                                <div class="progress-stat study-time-button"
+                                     aria-label="Study timer from Calendar and Time">
+                                    <span>STUDY TIME</span>
+                                    <strong id="studyTime">0:00:00</strong>
+                                    <small id="timerStatus">OPEN CALENDAR &amp; TIME TO START</small>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="widget-group">
+                            <label>DAILY TASKS</label>
+
+                            <div class="widget daily-widget">
+                                <div class="widget-heading">
+                                    <span>Daily Checklist</span>
+                                    <span class="task-count" id="dailyCount">0</span>
+                                </div>
+
+                                <p class="widget-description">
+                                    Small steps lead to big achievements.
+                                </p>
+
+                                <div class="task-list" id="dailyTaskList">
+                                    <p class="empty-state">
+                                        Your daily checklist is empty.
+                                    </p>
+                                </div>
+
+                            </div>
+                        </section>
+
+                        <section class="widget-group">
+                            <label>WEEKLY TASKS</label>
+
+                            <div class="widget weekly-widget">
+                                <div class="widget-heading">
+                                    <span>Weekly Goals</span>
+                                    <span class="task-count" id="weeklyCount">0</span>
+                                </div>
+
+                                <p class="widget-description">
+                                    Plan your goals for this week.
+                                </p>
+
+                                <div class="task-list" id="weeklyTaskList">
+                                    <p class="empty-state">
+                                        No weekly goals added yet.
+                                    </p>
+                                </div>
+
+                            </div>
+                        </section>
+
+                    </div>
+                </div>
+
+            </section>
+
+        </div>
+
+        <div class="toast" id="toast" role="status"
+             aria-live="polite" hidden></div>
+
+    </main>
+
+    <script src="/js/auth.js" defer></script>
+    <script src="/js/home.js" defer></script>
+</body>
+</html>
+

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/_head', { title: 'Login' }) %>
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+    <%- include('../partials/_theme-button') %>
+
+    <main class="auth-page login-page">
+        <div class="purple-strip"></div>
+
+        <section class="auth-background">
+            <div class="auth-content">
+                <img
+                    src="/assets/study-quest-logo.svg"
+                    alt="Study Quest Logo"
+                    class="auth-logo"
+                >
+
+                <form class="auth-card" id="loginForm">
+                    <h2>LOG IN</h2>
+
+                    <div class="form-group">
+                        <label for="username">USERNAME OR EMAIL:</label>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            autocomplete="username"
+                            value="<%= typeof prefillUsername !== 'undefined' ? prefillUsername : '' %>"
+                            required
+                        >
+                        <small class="field-hint">
+                            Enter the username or email used when you registered.
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">PASSWORD:</label>
+
+                        <div class="password-wrapper">
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                autocomplete="current-password"
+                                required
+                            >
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                data-target="password"
+                                aria-label="Show password"
+                                aria-pressed="false"
+                            >
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <small class="field-hint">
+                            Enter your registered password.
+                        </small>
+                    </div>
+
+                    <p
+                        class="form-message"
+                        id="loginMessage"
+                        aria-live="polite"
+                    ></p>
+
+                    <div class="form-buttons">
+                        <a class="btn-secondary" href="/register">
+                            REGISTER
+                        </a>
+
+                        <button
+                            class="btn-primary"
+                            id="loginSubmit"
+                            type="submit"
+                            disabled
+                        >
+                            LOGIN
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <div class="purple-strip bottom-strip"></div>
+    </main>
+
+    <script src="/js/auth.js" defer></script>
+</body>
+</html>
+

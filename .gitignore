@@ -1,0 +1,37 @@
+node_modules/
+
+# Environment and local configuration
+.env
+.env.*
+!.env.example
+
+# Build and bundler output
+dist/
+build/
+out/
+.next/
+.nuxt/
+.cache/
+.vite/
+
+# Logs and reports
+*.log
+logs/
+coverage/
+
+# Local databases and generated files
+*.sqlite
+*.sqlite3
+tmp/
+temp/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini

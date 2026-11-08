@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/_head', { title: 'Calendar & Time' }) %>
+    <link rel="stylesheet" href="/css/calendar.css">
+</head>
+<body>
+
+    <main class="dashboard-page" id="calendarDashboard">
+
+        <div class="dashboard-layout">
+
+            <%- include('partials/_sidebar') %>
+
+            <section class="dashboard-main">
+                <header class="topbar curriculum-heading">
+                    <div>
+                        <p class="eyebrow">YOUR LEARNING SPACE</p>
+                        <h1>Calendar &amp; Time</h1>
+                        <p class="page-subtitle welcome-message">
+                            Manage your study sessions, deadlines, and daily schedule.
+                        </p>
+                    </div>
+                    <div class="curriculum-header-actions">
+                        <div class="topbar-badge">
+                            <span class="status-dot"></span>
+                            Your study schedule
+                        </div>
+                        <button class="logout-button" id="logoutButton"
+                                type="button">LOG OUT</button>
+                    </div>
+                </header>
+
+                <!-- TIMER -->
+                <section class="widget-group timer-section">
+                    <label>STUDY TIMER</label>
+
+                    <div class="timer-widget">
+
+                        <div class="timer-content">
+
+                            <div class="timer-top-controls">
+                                <div class="timer-mode-group">
+                                    <label for="timerMode">TIMER MODE</label>
+                                    <select id="timerMode" class="timer-mode">
+                                        <option value="stopwatch">
+                                            Stopwatch — Count Up
+                                        </option>
+                                        <option value="countdown">
+                                            Countdown — Count to Zero
+                                        </option>
+                                        <option value="alarm">
+                                            Alarm Clock — Set a Time
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="timer-utility-buttons">
+                                    <button class="timer-tool-button" id="editTimerButton" type="button" title="Edit timer duration" hidden>
+                                        ✏️ Edit Timer
+                                    </button>
+                                    <button class="timer-tool-button" id="openAlarmSettingsButton" type="button" title="Alarm &amp; Sound Settings">
+                                        🔔 Alarm Settings
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="timer-heading-row">
+                                <h2 id="timerHeading">STOPWATCH</h2>
+                            </div>
+
+                            <!-- Persistent On-Screen Time Reminder -->
+                            <div class="timer-reminder-banner" id="timerReminderBanner" hidden>
+                                <div class="reminder-banner-content">
+                                    <span class="reminder-icon" id="reminderBannerIcon">⏰</span>
+                                    <span class="reminder-text" id="reminderBannerText">Reminder: 10 minutes left</span>
+                                </div>
+                                <button class="reminder-dismiss-btn" id="dismissReminderButton" type="button" hidden>
+                                    DISMISS
+                                </button>
+                            </div>
+
+                            <div class="timer-display" id="timerDisplay"
+                                 role="timer" aria-live="off">00:00:00</div>
+
+                            <!-- Quick Add / Subtract Time Controls -->
+                            <div class="timer-quick-adjust" id="quickAdjustButtons" hidden>
+                                <span class="quick-adjust-label">ADJUST TIME:</span>
+                                <button type="button" class="quick-adjust-btn" data-adjust="-300" title="Subtract 5 minutes">−5m</button>
+                                <button type="button" class="quick-adjust-btn" data-adjust="-60" title="Subtract 1 minute">−1m</button>
+                                <button type="button" class="quick-adjust-btn" data-adjust="60" title="Add 1 minute">+1m</button>
+                                <button type="button" class="quick-adjust-btn" data-adjust="300" title="Add 5 minutes">+5m</button>
+                            </div>
+
+                            <p class="timer-status" id="timerStatus"
+                               aria-live="polite">Ready to study?</p>
+
+                            <p class="timer-hint" id="timerHint">
+                                Track how long you spend on a task.
+                            </p>
+
+                        </div>
+
+                        <div class="timer-side-panel">
+
+                            <!-- COUNTDOWN DURATION SETTINGS -->
+                            <div class="timer-settings countdown-settings" id="countdownSettings"
+                                 hidden>
+
+                                <div class="settings-title-row">
+                                    <span class="settings-heading">COUNTDOWN DURATION</span>
+                                    <span class="live-edit-badge" id="liveEditBadge" hidden>Editing Live</span>
+                                </div>
+
+                                <div class="time-inputs-row">
+                                    <div class="time-input-field">
+                                        <label for="countdownHours">HOURS</label>
+                                        <input id="countdownHours" type="number"
+                                               min="0" max="99" value="0">
+                                    </div>
+                                    <div class="time-input-field">
+                                        <label for="countdownMinutes">MINS</label>
+                                        <input id="countdownMinutes" type="number"
+                                               min="0" max="59" value="25">
+                                    </div>
+                                    <div class="time-input-field">
+                                        <label for="countdownSeconds">SECS</label>
+                                        <input id="countdownSeconds" type="number"
+                                               min="0" max="59" value="0">
+                                    </div>
+                                </div>
+
+                                <div class="edit-timer-actions" id="editTimerActions" hidden>
+                                    <button class="timer-btn-sm apply-btn" id="applyDurationEdit" type="button">
+                                        ✓ Apply Time
+                                    </button>
+                                    <button class="timer-btn-sm cancel-btn" id="cancelDurationEdit" type="button">
+                                        Cancel
+                                    </button>
+                                </div>
+
+                            </div>
+
+                            <!-- INDEPENDENT REMINDER ALARM SETTING -->
+                            <div class="timer-settings reminder-settings" id="reminderSettings"
+                                 hidden>
+
+                                <div class="settings-title-row">
+                                    <label class="reminder-toggle-label" for="reminderAlarmEnabled">
+                                        <input type="checkbox" id="reminderAlarmEnabled" checked>
+                                        <span class="settings-heading">REMINDER ALARM</span>
+                                    </label>
+                                </div>
+
+                                <div class="reminder-config-panel" id="reminderConfigPanel">
+                                    <p class="reminder-subhead">Notify me when remaining time is:</p>
+                                    <div class="time-inputs-row reminder-inputs-row">
+                                        <div class="time-input-field">
+                                            <label for="reminderHours">HOURS</label>
+                                            <input id="reminderHours" type="number"
+                                                   min="0" max="99" value="0">
+                                        </div>
+                                        <div class="time-input-field">
+                                            <label for="reminderMinutes">MINS</label>
+                                            <input id="reminderMinutes" type="number"
+                                                   min="0" max="59" value="10">
+                                        </div>
+                                        <div class="time-input-field">
+                                            <label for="reminderSeconds">SECS</label>
+                                            <input id="reminderSeconds" type="number"
+                                                   min="0" max="59" value="0">
+                                        </div>
+                                    </div>
+                                    <div class="reminder-presets-row">
+                                        <button type="button" class="reminder-preset-btn" data-preset-m="5">5m left</button>
+                                        <button type="button" class="reminder-preset-btn active" data-preset-m="10">10m left</button>
+                                        <button type="button" class="reminder-preset-btn" data-preset-m="15">15m left</button>
+                                        <button type="button" class="reminder-preset-btn" data-preset="half">50% left</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- ALARM CLOCK MODE SETTINGS -->
+                            <div class="timer-settings" id="alarmSettings"
+                                 hidden>
+
+                                <label for="alarmTime">ALARM TIME</label>
+                                <input id="alarmTime" type="time">
+
+                                <p class="setting-note">
+                                    If the time has passed, the alarm is
+                                    scheduled for tomorrow.
+                                </p>
+
+                            </div>
+
+                            <div class="timer-progress-track"
+                                 aria-hidden="true">
+                                <div class="timer-progress"
+                                     id="timerProgress"></div>
+                            </div>
+
+                            <div class="timer-buttons">
+                                <button class="timer-button primary"
+                                        id="startTimer" type="button">
+                                    ▶ START
+                                </button>
+
+                                <button class="timer-button"
+                                        id="pauseTimer" type="button"
+                                        disabled>
+                                    Ⅱ PAUSE
+                                </button>
+
+                                <button class="timer-button reset"
+                                        id="resetTimer" type="button">
+                                    ↻ RESET
+                                </button>
+                            </div>
+
+                            <!-- SEPARATE ALARM DISMISS BUTTONS -->
+                            <button class="dismiss-alarm-button reminder-dismiss-alarm-btn"
+                                    id="dismissReminderAlarm" type="button" hidden>
+                                🔕 STOP REMINDER SOUND
+                            </button>
+
+                            <button class="dismiss-alarm-button"
+                                    id="dismissAlarm" type="button" hidden>
+                                🔕 STOP COMPLETION ALARM
+                            </button>
+
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CALENDAR -->
+                <section class="widget-group calendar-section">
+                    <label>CALENDAR</label>
+
+                    <div class="calendar-widget">
+
+                        <div class="calendar-panel">
+
+                            <div class="calendar-header">
+
+                                <button class="calendar-nav-button"
+                                        id="prevMonth" type="button"
+                                        aria-label="Previous month">‹</button>
+
+                                <h2 id="monthYear">Month Year</h2>
+
+                                <button class="calendar-nav-button"
+                                        id="nextMonth" type="button"
+                                        aria-label="Next month">›</button>
+
+                            </div>
+
+                            <button class="today-button"
+                                    id="todayButton" type="button">
+                                TODAY
+                            </button>
+
+                            <div class="calendar-grid calendar-weekdays"
+                                 aria-hidden="true">
+                                <span>SU</span>
+                                <span>MO</span>
+                                <span>TU</span>
+                                <span>WE</span>
+                                <span>TH</span>
+                                <span>FR</span>
+                                <span>SA</span>
+                            </div>
+
+                            <div class="calendar-grid" id="calendarDays"
+                                 aria-label="Calendar dates"></div>
+
+                            <div class="calendar-legend">
+                                <span class="legend-dot today-dot"></span>
+                                Today
+                                <span class="legend-dot task-dot"></span>
+                                Has tasks
+                            </div>
+
+                        </div>
+
+                        <div class="calendar-tasks-panel">
+
+                            <div class="calendar-task-header">
+                                <div>
+                                    <span class="panel-eyebrow">
+                                        YOUR SCHEDULE
+                                    </span>
+
+                                    <h2>Tasks</h2>
+
+                                    <p id="selectedDate">
+                                        Select a date
+                                    </p>
+                                </div>
+
+                                <button class="calendar-add-button"
+                                        id="addCalendarTask" type="button"
+                                        aria-label="Add a task">+</button>
+                            </div>
+
+                            <div class="calendar-task-list"
+                                 id="calendarTaskList"></div>
+
+                            <p class="empty-state" id="emptyMessage">
+                                No tasks scheduled for this date.
+                            </p>
+
+                            <p class="calendar-footnote">
+                                Select a date to view or manage its tasks.
+                            </p>
+
+                        </div>
+
+                    </div>
+                </section>
+
+            </section>
+
+        </div>
+
+        <!-- TASK POP-UP -->
+        <dialog class="task-dialog" id="taskDialog">
+            <form id="calendarTaskForm">
+
+                <div class="dialog-heading">
+                    <span class="panel-eyebrow">STUDY QUEST</span>
+                    <h2 id="taskDialogTitle">Add a calendar task</h2>
+                    <p id="taskDialogDate"></p>
+                </div>
+
+                <label for="calendarTaskTitle">Task name</label>
+                <input id="calendarTaskTitle" name="taskTitle"
+                       type="text" maxlength="100"
+                       placeholder="e.g. Review Chapter 1" required>
+
+                <div class="dialog-actions">
+                    <button class="dialog-cancel" id="cancelTaskButton"
+                            type="button">CANCEL</button>
+
+                    <button class="dialog-save" type="submit">
+                        SAVE TASK
+                    </button>
+                </div>
+
+            </form>
+        </dialog>
+
+        <!-- PROFILE POP-UP -->
+        <dialog class="task-dialog profile-dialog" id="profileDialog">
+            <div class="profile-dialog-content">
+
+                <div class="profile-avatar large-avatar">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="8" r="4"
+                                fill="currentColor"/>
+                        <path d="M4.5 21c0-4.2 3.1-7 7.5-7s7.5 2.8 7.5 7"
+                              fill="currentColor"/>
+                    </svg>
+                </div>
+
+                <span class="panel-eyebrow">YOUR STUDY QUEST</span>
+                <h2 id="profileDialogName"><%= typeof user !== 'undefined' && user.username ? user.username : 'username' %></h2>
+                <p>LEVEL 0 · STUDY EXPLORER</p>
+
+                <button class="dialog-save" id="closeProfileButton"
+                        type="button">CLOSE</button>
+
+            </div>
+        </dialog>
+
+        <!-- ALARM & SOUND SETTINGS DIALOG -->
+        <dialog class="task-dialog alarm-settings-dialog" id="alarmSettingsDialog">
+            <div class="alarm-dialog-content">
+                <span class="panel-eyebrow">STUDY QUEST AUDIO</span>
+                <h2>Alarm &amp; Sound Settings</h2>
+                <p class="alarm-dialog-desc">Customize sound notifications and tone preferences for reminders and timer completion.</p>
+
+                <div class="alarm-option-group">
+                    <label class="alarm-checkbox-row" for="soundEnabledToggle">
+                        <input type="checkbox" id="soundEnabledToggle" checked>
+                        <span>Enable Audible Alarms &amp; Sound Effects</span>
+                    </label>
+                </div>
+
+                <div class="alarm-option-group">
+                    <label for="reminderSoundSelect" class="alarm-field-label">Reminder Alarm Sound</label>
+                    <div class="sound-select-row">
+                        <select id="reminderSoundSelect" class="alarm-sound-select">
+                            <option value="chime">Gentle Chime (Harmonic Chord)</option>
+                            <option value="beep">Digital Beep (Double Pulse)</option>
+                            <option value="marimba">Warm Marimba</option>
+                            <option value="bell">Soft Singing Bell</option>
+                        </select>
+                        <button type="button" class="test-sound-button" id="testReminderSoundButton">▶ Test</button>
+                    </div>
+                </div>
+
+                <div class="alarm-option-group">
+                    <label for="completionSoundSelect" class="alarm-field-label">Timer Completion Sound</label>
+                    <div class="sound-select-row">
+                        <select id="completionSoundSelect" class="alarm-sound-select">
+                            <option value="triumph">Triumphant Fanfare (Celebration)</option>
+                            <option value="chime">Gentle Chime</option>
+                            <option value="beep">Digital Beep</option>
+                            <option value="marimba">Warm Marimba</option>
+                            <option value="bell">Continuous Bell</option>
+                        </select>
+                        <button type="button" class="test-sound-button" id="testCompletionSoundButton">▶ Test</button>
+                    </div>
+                </div>
+
+                <div class="dialog-actions">
+                    <button class="dialog-save" id="closeAlarmSettingsButton" type="button">DONE</button>
+                </div>
+            </div>
+        </dialog>
+
+        <div class="toast" id="toast" role="status"
+             aria-live="polite" hidden></div>
+
+    </main>
+
+    <script src="/js/auth.js" defer></script>
+    <script src="/js/calendar.js" defer></script>
+</body>
+</html>
+

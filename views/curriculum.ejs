@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/_head', { title: 'Curriculum' }) %>
+    <link rel="stylesheet" href="/css/curriculum.css">
+</head>
+<body>
+
+  <div class="app-layout">
+
+    <%- include('partials/_sidebar') %>
+
+    <main class="main-content curriculum-main">
+      <header class="topbar curriculum-heading">
+        <div>
+          <p class="eyebrow">YOUR LEARNING SPACE</p>
+          <h1>Curriculum</h1>
+          <p class="page-subtitle">
+            Keep your learning materials organized in one place.
+          </p>
+        </div>
+
+        <div class="curriculum-header-actions">
+          <div class="topbar-badge">
+            <span class="status-dot"></span>
+            Your study library
+          </div>
+          <button class="logout-button" id="logoutButton" type="button">
+            LOG OUT
+          </button>
+        </div>
+      </header>
+
+      <!-- UPLOAD SECTION -->
+      <section class="upload-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">ADD MATERIALS</p>
+            <h2>Upload your curriculum</h2>
+            <p class="muted">
+              Save your PDFs and images for easy access whenever you study.
+            </p>
+          </div>
+          <div class="upload-icon">↑</div>
+        </div>
+
+        <form id="uploadForm">
+          <label class="upload-dropzone" for="curriculumFile">
+            <span class="upload-cloud">↑</span>
+            <strong>Choose a file to upload</strong>
+            <span class="muted">PDF, JPG, JPEG, PNG, or WEBP</span>
+            <span class="file-size-hint">Maximum file size: 15 MB</span>
+            <span class="choose-file-button">Browse files</span>
+          </label>
+
+          <input
+            type="file"
+            id="curriculumFile"
+            name="file"
+            accept=".pdf,.jpg,.jpeg,.png,.webp,application/pdf,image/jpeg,image/png,image/webp"
+            required
+          >
+
+          <div class="selected-file" id="selectedFile" hidden>
+            <span class="selected-file-icon">▤</span>
+            <div class="selected-file-info">
+              <strong id="selectedFileName"></strong>
+              <span id="selectedFileSize"></span>
+            </div>
+            <button type="button" id="clearFileButton" class="clear-file">
+              ✕
+            </button>
+          </div>
+
+          <div class="upload-footer">
+            <p id="uploadMessage" class="message" aria-live="polite"></p>
+            <button type="submit" id="uploadButton" class="primary-button">
+              Upload file <span>↑</span>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- FILE PREVIEW SECTION -->
+      <section class="preview-section" id="previewSection" hidden>
+        <div class="preview-heading">
+          <div>
+            <p class="eyebrow">DOCUMENT VIEWER</p>
+            <h2 id="previewTitle">File Preview</h2>
+            <p class="muted" id="previewDescription">
+              View your curriculum file here.
+            </p>
+          </div>
+
+          <div class="preview-actions">
+            <div class="zoom-controls" aria-label="Preview zoom controls">
+              <button type="button" class="secondary-button" id="zoomOutButton"
+                      aria-label="Zoom out">−</button>
+              <span id="zoomLevel" aria-live="polite">100%</span>
+              <button type="button" class="secondary-button" id="zoomInButton"
+                      aria-label="Zoom in">+</button>
+              <button type="button" class="secondary-button" id="resetZoomButton">
+                Reset
+              </button>
+            </div>
+            <button
+              type="button"
+              class="secondary-button"
+              id="closePreviewButton"
+            >
+              ✕ Close preview
+            </button>
+          </div>
+        </div>
+
+        <div class="preview-content" id="previewContent">
+          <p class="muted">Select a file to preview.</p>
+        </div>
+      </section>
+
+      <!-- SAVED FILES -->
+      <section class="files-section">
+        <div class="section-heading files-heading">
+          <div>
+            <p class="eyebrow">YOUR COLLECTION</p>
+            <h2>Saved materials</h2>
+            <p class="muted">
+              Preview, download, or remove your uploaded files.
+            </p>
+          </div>
+
+          <div class="file-count" id="fileCount">0 files</div>
+        </div>
+
+        <p id="filesMessage" class="message" aria-live="polite"></p>
+
+        <div id="filesList" class="files-grid">
+          <div class="loading-state">Loading your materials...</div>
+        </div>
+      </section>
+
+      <footer class="page-footer">
+        <span>Study Quest</span>
+        <span>One step at a time. One goal at a time.</span>
+      </footer>
+
+    </main>
+  </div>
+
+  <dialog class="profile-dialog" id="profileDialog">
+    <div class="profile-dialog-content">
+      <div class="profile-avatar large-avatar" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="8" r="4" fill="currentColor"/>
+          <path d="M4.5 21c0-4.2 3.1-7 7.5-7s7.5 2.8 7.5 7"
+                fill="currentColor"/>
+        </svg>
+      </div>
+      <span class="profile-dialog-eyebrow">YOUR STUDY QUEST</span>
+      <h2 id="profileDialogName"><%= typeof user !== 'undefined' && user.username ? user.username : 'username' %></h2>
+      <p>LEVEL 0 · STUDY EXPLORER</p>
+      <button class="profile-dialog-close" id="closeProfileButton"
+              type="button">CLOSE</button>
+    </div>
+  </dialog>
+
+  <dialog class="task-dialog confirm-dialog" id="deleteFileDialog">
+    <div class="confirm-content">
+      <p class="dialog-eyebrow">LIBRARY MANAGEMENT</p>
+      <h2>Delete this file?</h2>
+      <p id="deleteFileMessage">
+        This file will be permanently removed from your study library.
+      </p>
+      <div class="dialog-actions">
+        <button class="dialog-cancel" id="cancelDeleteFileButton"
+                type="button">CANCEL</button>
+        <button class="dialog-save danger-button" id="confirmDeleteFileButton"
+                type="button">DELETE</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="/js/auth.js" defer></script>
+  <script src="/js/curriculum.js" defer></script>
+</body>
+</html>
+
